@@ -106,7 +106,7 @@ class TableObject:
 
     def ___display_csv_file_contents(self):
         """
-        Displays the contents of csv file, unless the file as no entries.
+        Displays the contents of csv file, unless the file has no entries.
         """
         if (csv_contents := pd.read_csv(self.csv_url)).empty:
             print('This table has no ordered items!')

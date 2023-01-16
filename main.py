@@ -6,37 +6,39 @@ ESCAPE_PHRASE = 'exit'
 MENU_URL = 'menu.csv'
 
 
-def main():
-    create_tables_directory()
-    while True:
-        table_number = validate_table_number(MAX_TABLE_VALUE)
-        restaurant_table_object = TableObject(table_number)
-        restaurant_table_object.action_handler()
+class Main:
+    def __init__(self):
+        self.create_tables_directory()
+        while True:
+            table_number = self.validate_table_number(MAX_TABLE_VALUE)
+            restaurant_table_object = TableObject(table_number)
+            restaurant_table_object.action_handler()
 
-        
-def create_tables_directory():
-    """
-    Creates a 'table' directory if it doesn't already exit.
-    """
-    if not os.path.exists('tables'):
-        os.mkdir('tables')
+    @staticmethod    
+    def create_tables_directory(self):
+        """
+        Creates a 'table' directory if it doesn't already exit.
+        """
+        if not os.path.exists('tables'):
+            os.mkdir('tables')
 
 
-def validate_table_number(max_table_number: int) -> str:
-    """
-    Returns a valid integer as a string.
-    :param max_table_number:
-    :return: table_number
-    :rtype: str
-    """
-    while True:
-        table_number: str = input(f'Enter the Table Number (1 to {max_table_number}), or "{ESCAPE_PHRASE}" to end: ')
-        if table_number.isdigit():
-            if 1 <= int(table_number) <= max_table_number:
-                return str(table_number)
-        elif table_number == ESCAPE_PHRASE:
-            exit()
-
+    @staticmethod
+    def validate_table_number(self, max_table_number: int) -> str:
+        """
+        Returns a valid integer as a string.
+        :param max_table_number:
+        :return: table_number
+        :rtype: str
+        """
+        while True:
+            table_number: str = input(f'Enter the Table Number (1 to {max_table_number}), or "{ESCAPE_PHRASE}" to end: ')
+            if table_number.isdigit():
+                if 1 <= int(table_number) <= max_table_number:
+                    return str(table_number)
+            elif table_number == ESCAPE_PHRASE:
+                exit()
+                
 
 class TableObject:
     def __init__(self, table_number):
@@ -61,15 +63,23 @@ class TableObject:
                 break
 
             if choice.lower().startswith('a'):  # append
-                self.___append_new_items_into_a_dictionary()
+                append_object = AppendCsv(self.csv_url)
+                append_object.append_new_items_into_a_dictionary()
 
             elif choice.lower().startswith('d'):  # display
-                self.___display_csv_file_contents()
+                display_object = DisplayCsv(self.csv_url)
+                display_object.display_csv_file_contents()
 
             elif choice.lower().startswith('c'):  # clear
-                self.___clear_contents()
+                clear_object = ClearCsv(self.csv_url)
+                clear_object.clear_csv_file_contents()
 
-    def ___append_new_items_into_a_dictionary(self):
+
+class AppendCsv:
+    def __init__(self, csv_url):
+        self.csv_url = csv_url
+
+    def append_new_items_into_a_dictionary(self):
         print(menu := pd.read_csv(MENU_URL))
         items_to_append: dict = {'Item': [], 'Price': []}
         while True:
@@ -105,7 +115,12 @@ class TableObject:
         df_combined_entries = pd.concat([df_new_entries, df_current_entries], ignore_index=True)
         df_combined_entries.to_csv(self.csv_url, mode='w', index=False)
 
-    def ___display_csv_file_contents(self):
+
+class DisplayCsv:
+    def __init__(self, csv_url):
+        self.csv_url = csv_url
+    
+    def display_csv_file_contents(self):
         """
         Displays the contents of csv file, unless the file has no entries.
         """
@@ -115,7 +130,12 @@ class TableObject:
         print(csv_contents)
         print(f'Total: {sum(csv_contents["Price"])}')
 
-    def ___clear_contents(self):
+
+class ClearCsv:
+    def __init__(self, csv_url):
+        self.csv_url = csv_url
+
+    def clear_csv_file_contents(self):
         """
         Resets csv file to only its headers.
         """
@@ -124,4 +144,4 @@ class TableObject:
 
 
 if __name__ == '__main__':
-    main()
+    main_class = Main()

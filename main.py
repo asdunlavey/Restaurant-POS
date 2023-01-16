@@ -13,6 +13,7 @@ def main():
         restaurant_table_object = TableObject(table_number)
         restaurant_table_object.action_handler()
 
+        
 def create_tables_directory():
     """
     Creates a 'table' directory if it doesn't already exit.

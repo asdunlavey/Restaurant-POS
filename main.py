@@ -22,7 +22,6 @@ class Main:
         if not os.path.exists('tables'):
             os.mkdir('tables')
 
-
     @staticmethod
     def validate_table_number(self, max_table_number: int) -> str:
         """

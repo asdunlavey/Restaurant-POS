@@ -15,15 +15,16 @@ class Main:
             restaurant_table_object.action_handler()
             del restaurant_table_object
 
-    def create_tables_directory(self):
+    @staticmethod
+    def create_tables_directory():
         """
         Creates a 'table' directory if it doesn't already exit.
         """
         if not os.path.exists('tables'):
             os.mkdir('tables')
 
-
-    def validate_table_number(self, max_table_number: int) -> str:
+    @staticmethod
+    def validate_table_number(max_table_number: int) -> str:
         """
         Returns a valid integer as a string.
         :param max_table_number:

@@ -1,5 +1,5 @@
 import os
-import pandas as pd
+import pandas
 
 
 MAX_TABLE_VALUE = 10
@@ -24,7 +24,7 @@ while True:
                         break
 
                     if choice == 'Append':
-                        print(menu := pd.read_csv(MENU_URL))
+                        print(menu := pandas.read_csv(MENU_URL))
                         items_to_append: dict = {'Item': [], 'Price': []}
                         while True:
                             desired_item = input(
@@ -45,14 +45,14 @@ while True:
                                 items_to_append['Item'].append(query_result.values[0][0])
                                 items_to_append['Price'].append(query_result.values[0][1])
 
-                            df_current_entries = pd.read_csv(csv_url)
-                            df_new_entries = pd.DataFrame(data=items_to_append)
+                            df_current_entries = pandas.read_csv(csv_url)
+                            df_new_entries = pandas.DataFrame(data=items_to_append)
 
-                            df_combined_entries = pd.concat([df_new_entries, df_current_entries],ignore_index=True)
+                            df_combined_entries = pandas.concat([df_new_entries, df_current_entries],ignore_index=True)
                             df_combined_entries.to_csv(csv_url, mode='w',index=False)
 
                     elif choice == 'Display':
-                        if (csv_contents := pd.read_csv(csv_url)).empty:
+                        if (csv_contents := pandas.read_csv(csv_url)).empty:
                             print('This table has no ordered items!')
 
                         else:

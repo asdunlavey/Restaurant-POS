@@ -92,13 +92,13 @@ class AppendCsv:
                 print('Item not recognised')
                 continue
 
-            for _ in range(self.___append_get_quantity()):
+            for _ in range(self.___get_quantity()):
                 items_to_append['Item'].append(query_result.values[0][0])
                 items_to_append['Price'].append(query_result.values[0][1])
-        self.___append_update_csv_file_with_new_items(items_to_append)
+        self.___update_csv_file_with_new_items(items_to_append)
 
     @staticmethod
-    def ___append_get_quantity() -> int:
+    def ___get_quantity() -> int:
         """
         Gets the user's desired quantity for one type of item on the menu.
         :return: quantity
@@ -109,7 +109,7 @@ class AppendCsv:
             if quantity.isdigit():
                 return int(quantity)
 
-    def ___append_update_csv_file_with_new_items(self, new_items):
+    def ___update_csv_file_with_new_items(self, new_items):
         df_current_entries = pd.read_csv(self.csv_url)
         df_new_entries = pd.DataFrame(data=new_items)
         df_combined_entries = pd.concat([df_new_entries, df_current_entries], ignore_index=True)
